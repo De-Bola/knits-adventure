@@ -32,21 +32,28 @@ public class EmployeediaController {
 
     @PutMapping("/api/edit-employee/{id}")
     public ResponseEntity<?> editEmployee(@PathVariable Long id, @RequestBody Employee employee){
-        if(employeediaService.getEmployeeById(id).isPresent()){
-            try{
-                employeediaService.addEmployee(employee);
+
+            try {
+
+                    Employee newEmployee = employeediaService.getEmployeeById(id);
+                    newEmployee.setActive(employee.isActive());
+                    newEmployee.setEmail(employee.getEmail());
+                    newEmployee.setFirstName(employee.getFirstName());
+                    newEmployee.setLastName(employee.getLastName());
+                    newEmployee.setHireDate(employee.getHireDate());
+                    newEmployee.setTelephone(employee.getTelephone());
+                    employeediaService.addEmployee(newEmployee);
+
                 return new ResponseEntity<>(HttpStatus.OK);
             } catch (Exception e){
                 e.getMessage();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/api/delete-employee/{id}")
     public ResponseEntity<?> deleteEmployee(@PathVariable Long id){
-        if(employeediaService.getEmployeeById(id).isPresent()){
+        if(employeediaService.getEmployeeById(id) != null){
             employeediaService.deleteEmployee(id);
             return new ResponseEntity<>(HttpStatus.OK);
         }

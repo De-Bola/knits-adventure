@@ -5,7 +5,6 @@ import com.employeedia.demo.repository.EmployeediaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EmployeediaService {
@@ -28,8 +27,8 @@ public class EmployeediaService {
         return employeediaRepository.saveAll(employees);
     }
 
-    public Optional<Employee> getEmployeeById(Long id){
-        return employeediaRepository.findById(id);
+    public Employee getEmployeeById(Long id) {
+        return employeediaRepository.findById(id).isPresent() ? employeediaRepository.findById(id).get() : null;
     }
 
     public void deleteEmployee(Long id){
