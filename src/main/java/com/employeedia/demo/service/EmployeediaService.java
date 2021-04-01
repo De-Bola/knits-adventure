@@ -27,6 +27,17 @@ public class EmployeediaService {
         return employeediaRepository.saveAll(employees);
     }
 
+    public Employee editEmployee(Long id, Employee employee){
+        Employee newEmployee = getEmployeeById(id);
+        newEmployee.setActive(employee.isActive());
+        newEmployee.setEmail(employee.getEmail());
+        newEmployee.setFirstName(employee.getFirstName());
+        newEmployee.setLastName(employee.getLastName());
+        newEmployee.setHireDate(employee.getHireDate());
+        newEmployee.setTelephone(employee.getTelephone());
+        return addEmployee(newEmployee);
+    }
+
     public Employee getEmployeeById(Long id) {
         return employeediaRepository.findById(id).isPresent() ? employeediaRepository.findById(id).get() : null;
     }

@@ -32,18 +32,8 @@ public class EmployeediaController {
 
     @PutMapping("/api/edit-employee/{id}")
     public ResponseEntity<?> editEmployee(@PathVariable Long id, @RequestBody Employee employee){
-
             try {
-
-                    Employee newEmployee = employeediaService.getEmployeeById(id);
-                    newEmployee.setActive(employee.isActive());
-                    newEmployee.setEmail(employee.getEmail());
-                    newEmployee.setFirstName(employee.getFirstName());
-                    newEmployee.setLastName(employee.getLastName());
-                    newEmployee.setHireDate(employee.getHireDate());
-                    newEmployee.setTelephone(employee.getTelephone());
-                    employeediaService.addEmployee(newEmployee);
-
+                employeediaService.editEmployee(id, employee);
                 return new ResponseEntity<>(HttpStatus.OK);
             } catch (Exception e){
                 e.getMessage();

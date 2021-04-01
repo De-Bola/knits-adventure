@@ -42,8 +42,8 @@ public class DemoApplication {
         };
     }
 
-    @Bean
+    @Bean //uri -> http://localhost:8080/swagger-ui.html#/
     public Docket productApi(){
-        return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.basePackage("com.example.demo")).build();
+        return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.basePackage("com.employeedia.demo")).build();
     }
 }
