@@ -32,7 +32,7 @@ public class EmployeediaController {
 
     @PutMapping("/api/edit-employee/{id}")
     public ResponseEntity<?> editEmployee(@PathVariable Long id, @RequestBody Employee employee){
-
+            //todo: try catch should be in service. -Adebola
             try {
 
                     Employee newEmployee = employeediaService.getEmployeeById(id);
