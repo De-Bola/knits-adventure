@@ -1,5 +1,6 @@
 package com.employeedia.demo.service;
 
+import com.employeedia.demo.exceptions.UserNotFoundException;
 import com.employeedia.demo.model.Employee;
 import com.employeedia.demo.repository.EmployeediaRepository;
 import org.springframework.stereotype.Service;
@@ -27,9 +28,9 @@ public class EmployeediaService {
         return employeediaRepository.saveAll(employees);
     }
 
-    public Employee editEmployee(Long id, Employee employee){
+    public Employee editEmployee(Long id, Employee employee) throws Throwable{
         Employee newEmployee = getEmployeeById(id);
-        newEmployee.setActive(employee.isActive());
+        newEmployee.setIsActive(employee.getIsActive());
         newEmployee.setEmail(employee.getEmail());
         newEmployee.setFirstName(employee.getFirstName());
         newEmployee.setLastName(employee.getLastName());
@@ -38,8 +39,11 @@ public class EmployeediaService {
         return addEmployee(newEmployee);
     }
 
-    public Employee getEmployeeById(Long id) {
-        return employeediaRepository.findById(id).isPresent() ? employeediaRepository.findById(id).get() : null;
+    public Employee getEmployeeById(Long id) throws UserNotFoundException{
+        if (employeediaRepository.findById(id).isPresent()){
+            return employeediaRepository.findById(id).get();
+        }
+         throw new UserNotFoundException("User not found");
     }
 
     public void deleteEmployee(Long id){

@@ -31,7 +31,7 @@ public class EmployeediaController {
     }
 
     @PutMapping("/api/edit-employee/{id}")
-    public ResponseEntity<?> editEmployee(@PathVariable Long id, @RequestBody Employee employee){
+    public ResponseEntity<?> editEmployee(@PathVariable Long id, @RequestBody Employee employee) throws Throwable{
             try {
                 employeediaService.editEmployee(id, employee);
                 return new ResponseEntity<>(HttpStatus.OK);
@@ -41,8 +41,18 @@ public class EmployeediaController {
             }
     }
 
+    @GetMapping("/api/employeediaItem/{id}")
+    public ResponseEntity<?> fetchEmployeeById(@PathVariable Long id) throws Throwable{
+        try{
+            return ResponseEntity.ok(employeediaService.getEmployeeById(id));
+        }catch (Exception e){
+            e.getMessage();
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @DeleteMapping("/api/delete-employee/{id}")
-    public ResponseEntity<?> deleteEmployee(@PathVariable Long id){
+    public ResponseEntity<?> deleteEmployee(@PathVariable Long id) throws Throwable{
         if(employeediaService.getEmployeeById(id) != null){
             employeediaService.deleteEmployee(id);
             return new ResponseEntity<>(HttpStatus.OK);
