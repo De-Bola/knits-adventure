@@ -31,19 +31,9 @@ public class EmployeediaController {
     }
 
     @PutMapping("/api/edit-employee/{id}")
-    public ResponseEntity<?> editEmployee(@PathVariable Long id, @RequestBody Employee employee){
-            //todo: try catch should be in service. -Adebola
+    public ResponseEntity<?> editEmployee(@PathVariable Long id, @RequestBody Employee employee) throws Throwable{
             try {
-
-                    Employee newEmployee = employeediaService.getEmployeeById(id);
-                    newEmployee.setActive(employee.isActive());
-                    newEmployee.setEmail(employee.getEmail());
-                    newEmployee.setFirstName(employee.getFirstName());
-                    newEmployee.setLastName(employee.getLastName());
-                    newEmployee.setHireDate(employee.getHireDate());
-                    newEmployee.setTelephone(employee.getTelephone());
-                    employeediaService.addEmployee(newEmployee);
-
+                employeediaService.editEmployee(id, employee);
                 return new ResponseEntity<>(HttpStatus.OK);
             } catch (Exception e){
                 e.getMessage();
@@ -51,8 +41,18 @@ public class EmployeediaController {
             }
     }
 
+    @GetMapping("/api/employeediaItem/{id}")
+    public ResponseEntity<?> fetchEmployeeById(@PathVariable Long id) throws Throwable{
+        try{
+            return ResponseEntity.ok(employeediaService.getEmployeeById(id));
+        }catch (Exception e){
+            e.getMessage();
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @DeleteMapping("/api/delete-employee/{id}")
-    public ResponseEntity<?> deleteEmployee(@PathVariable Long id){
+    public ResponseEntity<?> deleteEmployee(@PathVariable Long id) throws Throwable{
         if(employeediaService.getEmployeeById(id) != null){
             employeediaService.deleteEmployee(id);
             return new ResponseEntity<>(HttpStatus.OK);

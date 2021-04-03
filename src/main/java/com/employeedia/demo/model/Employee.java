@@ -18,12 +18,12 @@ public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;
     private String telephone;
     private Date hireDate;
-    private boolean isActive;
+    private Boolean isActive;
 
 }
